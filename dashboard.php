@@ -78,48 +78,47 @@
         </nav><!--/nav-->
     </header><!--/header-->
 
-
+<br><br>
 <div class="container">
     <div class="row">
+
+     <form role="form" id="assign_teacher_form_666" action="/php-files/assign_teacher_semester.php" method="post">
+
+
         <div class="col-sm-3">
            
-            <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Company Type
-                    <span class="caret"></span>
-                </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <?php 
+            <div class="form-group">
+                <label> Select Company Type</label>
+                <select class="form-control" id="Dept" name="Dept">
+                   <?php 
 
-                  ?>
-                    <li><a href="#">Jute</a></li>
-                    <li><a href="#">IT</a></li>
-                    <li><a href="#">Fuel & Energy</a></li>
-                  
-                  </ul>
+                    $query = 'SELECT DISTINCT(company_type) FROM companies';
+                    $result = mysqli_query($conn,$query);
+                    while ($row = $result->fetch_assoc()) {
+                        $company_types = $row["company_type"];
+                        echo "<option>".$company_types."</option>";
+
+                     }
+                     
+                    
+                    ?>
+                </select>
+           </div> 
+
+        </div>
+
+
+
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label> Select Available Companies</label>
+                <select class="form-control"  id="existing_courses_show_bla" name="existing_courses_show_bla" required>
+                                 
+                                
+                </select>
             </div>
 
-
-        </div>
-
-
-
-
-        <div class="col-sm-3">
-            <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Company Type
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
-
         </div>
 
 
@@ -127,46 +126,28 @@
 
 
         <div class="col-sm-3">
-            <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Company Type
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
+             <div class="form-group">
+                <label> Select Available Company Data  Type</label>
+                <select class="form-control"  id="existing_courses_show_bla_2" name="existing_courses_show_bla_2" required>
+                                 
+                                
+                </select>
+            </div>
 
         </div>
-
-
-
-
-
-
-
 
 
         <div class="col-sm-3">
-            <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle btn-block" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Company Type
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
-
+            <div class="form-group">
+                <label> Select An Available Year</label>
+                <select class="form-control"  id="existing_courses_show_bla_3" name="existing_courses_show_bla_3" required>
+                                 
+                                
+                </select>
+            </div>
         </div>
+
+         </form>
     </div>
 </div>
 
@@ -199,5 +180,125 @@
     <script src="js/jquery.inview.min.js"></script>
     <script src="js/wow.min.js"></script>
     <script src="js/custom-scripts.js"></script>
+
+
+<!--for the available company portion-->
+    <script>
+
+        $('#Dept').on('change', function () {
+            var e = document.getElementById("Dept");
+            var Dept_val = e.options[e.selectedIndex].value;
+
+            $.ajax({
+                url: "get_company_by_type.php",
+                type: "POST",
+                data: { 'Dept': Dept_val },
+                success: function (dataa) {
+                    $('#existing_courses_show_bla').html('');
+                    data = JSON.parse(dataa);
+                    lengtio = data.length;
+                    for (i = 0; i < lengtio; i++) { 
+                    $('#existing_courses_show_bla').append('<option>'+data[i]+'</option>');
+                        
+                    }
+                    
+
+                    /*
+                    if (dataa == 0) {
+                    alert("Sorry something went wrong, please try again!");
+                    } else {
+                    $('#existing_courses_show_bla').html('');
+                    $('#existing_courses_show_bla').append('<option value="19">19</option>');
+                    }
+                    */
+                },
+                error: function () {
+                    alert("Sorry something went wrong, please try again!");
+                }
+            });
+        });
+
+    </script>
+
+<!-- for the company data type -->
+  <script>
+
+        $('#existing_courses_show_bla').on('change', function () {
+            var e = document.getElementById("existing_courses_show_bla");
+            var Dept_val = e.options[e.selectedIndex].value;
+
+            $.ajax({
+                url: "get_data_type_by_company.php",
+                type: "POST",
+                data: { 'Dept': Dept_val },
+                success: function (dataa) {
+                    $('#existing_courses_show_bla_2').html('');
+                    data = JSON.parse(dataa);
+                    lengtio = data.length;
+                    for (i = 0; i < lengtio; i++) { 
+                    $('#existing_courses_show_bla_2').append('<option>'+data[i]+'</option>');
+                        
+                    }
+                    
+
+                    /*
+                    if (dataa == 0) {
+                    alert("Sorry something went wrong, please try again!");
+                    } else {
+                    $('#existing_courses_show_bla').html('');
+                    $('#existing_courses_show_bla').append('<option value="19">19</option>');
+                    }
+                    */
+                },
+                error: function () {
+                    alert("Sorry something went wrong, please try again!");
+                }
+            });
+        });
+
+    </script>
+
+     <script>
+        //by default load something in the dropdown
+        $( document ).ready(function() {
+               
+
+
+                var e = document.getElementById("Dept");
+                var Dept_val = e.options[e.selectedIndex].value;
+
+                $.ajax({
+                    url: "get_company_by_type.php",
+                    type: "POST",
+                    data: { 'Dept': Dept_val },
+                    success: function (dataa) {
+                        $('#existing_courses_show_bla').html('');
+                        data = JSON.parse(dataa);
+                        lengtio = data.length;
+                        for (i = 0; i < lengtio; i++) { 
+                        $('#existing_courses_show_bla').append('<option>'+data[i]+'</option>');
+                            
+                        }
+                        
+
+                        /*
+                        if (dataa == 0) {
+                        alert("Sorry something went wrong, please try again!");
+                        } else {
+                        $('#existing_courses_show_bla').html('');
+                        $('#existing_courses_show_bla').append('<option value="19">19</option>');
+                        }
+                        */
+                    },
+                    error: function () {
+                        alert("Sorry something went wrong, please try again!");
+                    }
+                });
+
+
+
+        });        
+        </script
+   
 </body>
 </html>
