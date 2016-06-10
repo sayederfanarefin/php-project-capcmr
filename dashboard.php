@@ -201,16 +201,6 @@
                     $('#existing_courses_show_bla').append('<option>'+data[i]+'</option>');
                         
                     }
-                    
-
-                    /*
-                    if (dataa == 0) {
-                    alert("Sorry something went wrong, please try again!");
-                    } else {
-                    $('#existing_courses_show_bla').html('');
-                    $('#existing_courses_show_bla').append('<option value="19">19</option>');
-                    }
-                    */
                 },
                 error: function () {
                     alert("Sorry something went wrong, please try again!");
@@ -240,15 +230,6 @@
                         
                     }
                     
-
-                    /*
-                    if (dataa == 0) {
-                    alert("Sorry something went wrong, please try again!");
-                    } else {
-                    $('#existing_courses_show_bla').html('');
-                    $('#existing_courses_show_bla').append('<option value="19">19</option>');
-                    }
-                    */
                 },
                 error: function () {
                     alert("Sorry something went wrong, please try again!");
@@ -257,6 +238,42 @@
         });
 
     </script>
+
+<!-- year portion -->
+  <script>
+
+        $('#existing_courses_show_bla_2').on('change', function () {
+            var e = document.getElementById("existing_courses_show_bla_2");
+            var Dept_val = e.options[e.selectedIndex].value;
+
+
+            var e2 = document.getElementById("existing_courses_show_bla");
+            var Dept_val_2 = e2.options[e2.selectedIndex].value;
+
+
+            $.ajax({ 
+                url: "get_year_by_company_data_type.php",
+                type: "POST",
+                data: { 'Dept': Dept_val , 'company': Dept_val_2 },
+                success: function (dataa) {
+                    $('#existing_courses_show_bla_3').html('');
+                    data = JSON.parse(dataa);
+                    lengtio = data.length;
+                    for (i = 0; i < lengtio; i++) { 
+                    $('#existing_courses_show_bla_3').append('<option>'+data[i]+'</option>');
+                        
+                    }
+                    
+                },
+                error: function () {
+                    alert("Sorry something went wrong, please try again!");
+                }
+            });
+        });
+
+    </script>
+
+
 
      <script>
         //by default load something in the dropdown
@@ -279,16 +296,39 @@
                         $('#existing_courses_show_bla').append('<option>'+data[i]+'</option>');
                             
                         }
-                        
 
-                        /*
-                        if (dataa == 0) {
-                        alert("Sorry something went wrong, please try again!");
-                        } else {
-                        $('#existing_courses_show_bla').html('');
-                        $('#existing_courses_show_bla').append('<option value="19">19</option>');
-                        }
-                        */
+
+
+
+            var e = document.getElementById("existing_courses_show_bla");
+            var Dept_val = e.options[e.selectedIndex].value;
+
+            $.ajax({
+                url: "get_data_type_by_company.php",
+                type: "POST",
+                data: { 'Dept': Dept_val },
+                success: function (dataa) {
+                    $('#existing_courses_show_bla_2').html('');
+                    data = JSON.parse(dataa);
+                    lengtio = data.length;
+                    for (i = 0; i < lengtio; i++) { 
+                    $('#existing_courses_show_bla_2').append('<option>'+data[i]+'</option>');
+                        
+                    }
+                    
+                },
+                error: function () {
+                    alert("Sorry something went wrong, please try again!");
+                }
+            });
+
+
+
+
+
+
+
+                        
                     },
                     error: function () {
                         alert("Sorry something went wrong, please try again!");
@@ -298,7 +338,7 @@
 
 
         });        
-        </script
+        </script>
    
 </body>
 </html>

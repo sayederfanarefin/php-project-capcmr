@@ -3,6 +3,7 @@ include 'db_connection.php';
 
 
 $Dept = $_POST['Dept'];
+$Dept_2 = $_POST['Dept_2'];
 
 /*
      $query_current_semester = "SELECT company_name FROM companies WHERE company_type = '".$Dept."'";
