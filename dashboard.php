@@ -82,7 +82,7 @@
 <div class="container">
     <div class="row">
 
-     <form role="form" id="assign_teacher_form_666" action="/php-files/assign_teacher_semester.php" method="post">
+     <form role="form" id="assign_teacher_form_666" action="" method="post">
 
 
         <div class="col-sm-3">
@@ -148,6 +148,10 @@
         </div>
 
          </form>
+    </div>
+
+    <div class="row">
+        
     </div>
 </div>
 
@@ -251,6 +255,7 @@
             var Dept_val_2 = e2.options[e2.selectedIndex].value;
 
 
+
             $.ajax({ 
                 url: "get_year_by_company_data_type.php",
                 type: "POST",
@@ -259,6 +264,9 @@
                     $('#existing_courses_show_bla_3').html('');
                     data = JSON.parse(dataa);
                     lengtio = data.length;
+
+
+
                     for (i = 0; i < lengtio; i++) { 
                     $('#existing_courses_show_bla_3').append('<option>'+data[i]+'</option>');
                         

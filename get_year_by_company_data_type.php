@@ -7,7 +7,7 @@ $company = $_POST['company'];
 
 $data = strtolower(str_replace(' ', '_', $data));
 
-$query = "SELECT DISTINCT(year) FROM ".$Dept_2." WHERE company_name = '".$Dept."'";
+$query = "SELECT DISTINCT(year) FROM ".$data." WHERE company_name = '".$company."'";
 
 $result = mysqli_query($conn, $query);
 
@@ -18,7 +18,7 @@ $i = 0;
 
 while($row = $result->fetch_assoc()){
     
-    $bullshit[$i] = $row["company_name"];
+    $bullshit[$i] = $row["year"];
     $i++;
 }
 
